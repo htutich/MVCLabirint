@@ -1,4 +1,7 @@
-﻿public interface IFixedUpdatable
+﻿namespace MVCLabirint
 {
-    void FixedTick();
+    public interface IFixedUpdatable
+    {
+        void FixedTick();
+    }
 }

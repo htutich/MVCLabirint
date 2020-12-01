@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 
+
 namespace MVCLabirint
 {
     public class PlayerController : IUpdatable, IFixedUpdatable
     {
         #region Fields
 
+        public PlayerModel _model;
+
         private Rigidbody _rigidbody;
-        private PlayerModel _model;
         private Vector3 _movement;
 
         #endregion
@@ -21,6 +23,8 @@ namespace MVCLabirint
             _model.HealthPoints = health;
             _model.ForceJump = forceJump;
             _rigidbody = player.GetComponent<Rigidbody>();
+            PlayerAdapt.Initialize(this);
+            DisplayBonuses.Initialize();
         }
 
         public void Tick()
@@ -31,8 +35,9 @@ namespace MVCLabirint
 
         public void FixedTick()
         {
+            _movement = _movement * _model.Speed;
             _movement.y = _rigidbody.velocity.y;
-            _rigidbody.velocity = _movement * _model.Speed;
+            _rigidbody.velocity = _movement;
         }
 
         #endregion

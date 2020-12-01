@@ -7,16 +7,32 @@ namespace MVCLabirint
     public class GameManager : MonoBehaviour
     {
         #region Fields
+
         [SerializeField] private Vector3 _playerCamera;
         [SerializeField] private Transform _playerSpawnPoint;
         [SerializeField] private GameObject _playerPrefab;
         private List<IUpdatable> _updatables = new List<IUpdatable>();
         private List<IFixedUpdatable> _fixedUpdatables = new List<IFixedUpdatable>();
+        private InteractiveObject[] _interactiveObjects;
 
         #endregion
 
 
         #region UnityMethods
+
+        private void Awake()
+        {
+            _interactiveObjects = FindObjectsOfType<InteractiveObject>();
+            for (var i = 0; i < _interactiveObjects.Length; i++)
+            {
+                var interactiveObject = _interactiveObjects[i];
+
+                if (interactiveObject != null)
+                {
+                    _updatables.Add(interactiveObject);
+                }
+            }
+        }
 
         private void Start()
         {

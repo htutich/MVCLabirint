@@ -1,4 +1,7 @@
-﻿public interface IUpdatable
+﻿namespace MVCLabirint
 {
-    void Tick();
+    public interface IUpdatable
+    {
+        void Tick();
+    }
 }

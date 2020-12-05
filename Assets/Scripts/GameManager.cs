@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 namespace MVCLabirint
@@ -20,8 +21,34 @@ namespace MVCLabirint
 
         #region UnityMethods
 
-        private void Awake()
+        private void Start()
         {
+            GameObject player = null;
+
+            try
+            {
+                player = Instantiate(_playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
+            }
+            catch (UnassignedReferenceException)
+            {
+                string objName = String.Empty;
+                if (_playerPrefab == null)
+                { 
+                    objName = "'Player Prefab'";
+                }
+                else if (_playerSpawnPoint == null)
+                { 
+                    objName = "'Start Point'";
+                }
+
+                throw new UnassignedReferenceException("Отсутствует объект " + objName + " в GameManager");
+            }
+
+            var playerView = player?.GetComponent<PlayerView>();
+            _updatables.Add(playerView);
+            _fixedUpdatables.Add(playerView);
+            _updatables.Add(new CameraController(player.transform, _playerCamera));
+
             _interactiveObjects = FindObjectsOfType<InteractiveObject>();
             for (var i = 0; i < _interactiveObjects.Length; i++)
             {
@@ -29,18 +56,10 @@ namespace MVCLabirint
 
                 if (interactiveObject != null)
                 {
+                    interactiveObject.WasInteract += playerView.ChangeColor;
                     _updatables.Add(interactiveObject);
                 }
             }
-        }
-
-        private void Start()
-        {
-            var player = Instantiate(_playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
-            var playerView = player.GetComponent<PlayerView>();
-            _updatables.Add(playerView);
-            _fixedUpdatables.Add(playerView);
-            _updatables.Add(new CameraController(player.transform, _playerCamera));
         }
 
         private void Update()
@@ -60,5 +79,6 @@ namespace MVCLabirint
         }
 
         #endregion
+
     }
 }

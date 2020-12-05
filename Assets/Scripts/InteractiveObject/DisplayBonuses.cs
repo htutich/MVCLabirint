@@ -22,9 +22,9 @@ namespace MVCLabirint
             _text.text = $"Вы набрали {_bonusCount}";
         }
 
-        public static void Display(int value)
+        public static void Display(int val)
         {
-            _bonusCount += value;
+            _bonusCount += val;
             _text.text = $"Вы набрали {_bonusCount}";
         }
 
@@ -37,6 +37,7 @@ namespace MVCLabirint
         {
             _text.text = $"Вы умерли!";
         }
+
 
         #endregion
     }

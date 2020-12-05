@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-
+using System;
+using static UnityEngine.Random;
 
 namespace MVCLabirint
 {
@@ -7,7 +8,7 @@ namespace MVCLabirint
     {
         public bool IsInteractable { get; } = true;
         protected abstract void Interaction();
-
+        public Action WasInteract;
 
         #region UnityMethods
 
@@ -23,7 +24,7 @@ namespace MVCLabirint
             {
                 return;
             }
-            Interaction();
+            WasInteract?.Invoke();
             Destroy(gameObject);
         }
 
@@ -36,7 +37,7 @@ namespace MVCLabirint
         {
             if (TryGetComponent(out Renderer renderer))
             {
-                renderer.material.color = Random.ColorHSV();
+                renderer.material.color = ColorHSV();
             }
         }
 

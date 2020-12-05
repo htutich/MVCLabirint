@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.Random;
 
 
 namespace MVCLabirint
@@ -42,6 +43,15 @@ namespace MVCLabirint
         {
             _controller.FixedTick();
         }
+
+        public void ChangeColor()
+        {
+            if (TryGetComponent(out Renderer renderer))
+            {
+                renderer.material.color = ColorHSV();
+            }
+        }
+
 
         #endregion
     }

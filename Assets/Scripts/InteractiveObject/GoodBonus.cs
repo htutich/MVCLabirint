@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 
 namespace MVCLabirint
@@ -7,6 +8,7 @@ namespace MVCLabirint
     {
         #region Fields
 
+        public Action Good;
         private Material _material;
 
         #endregion
@@ -19,7 +21,6 @@ namespace MVCLabirint
             _material = GetComponent<Renderer>().material;
         }
 
-
         #endregion
 
 
@@ -31,7 +32,9 @@ namespace MVCLabirint
             model.Speed = 1;
             PlayerAdapt.Fit(model);
             DisplayBonuses.Display(1);
+            Good?.Invoke();
         }
+
 
         #endregion
     }

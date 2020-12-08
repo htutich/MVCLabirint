@@ -24,7 +24,10 @@ namespace MVCLabirint
             _model.ForceJump = forceJump;
             _rigidbody = player.GetComponent<Rigidbody>();
             PlayerAdapt.Initialize(this);
-            DisplayBonuses.Initialize();
+
+            DisplayBonuses displayBonuses = new DisplayBonuses();
+            ServiceLocator.Set(displayBonuses);
+
         }
 
         public void Tick()

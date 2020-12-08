@@ -31,7 +31,7 @@ namespace MVCLabirint
             PlayerModel model = new PlayerModel();
             model.Speed = 1;
             PlayerAdapt.Fit(model);
-            DisplayBonuses.Display(1);
+            ServiceLocator.Get<DisplayBonuses>().Display(1);
             Good?.Invoke();
         }
 

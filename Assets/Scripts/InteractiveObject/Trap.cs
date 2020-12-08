@@ -27,7 +27,8 @@ namespace MVCLabirint
 
         protected override void Interaction()
         {
-            DisplayBonuses.DisplayTrap();
+            ServiceLocator.Get<DisplayBonuses>().DisplayTrap();
+            ServiceLocator.Get<GameOver>().GameEnd();
         }
 
         #endregion

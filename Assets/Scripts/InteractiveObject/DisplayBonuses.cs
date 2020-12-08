@@ -4,40 +4,46 @@ using UnityEngine;
 
 namespace MVCLabirint
 {
-    public static class DisplayBonuses
+    public class DisplayBonuses
     {
         #region Fields
 
         private static Text _text;
-        private static int _bonusCount = 0;
+        private static int _bonusCount;
+        private static int _maxCount = 3;
 
         #endregion
 
 
         #region Methods
 
-        public static void Initialize()
+        public DisplayBonuses()
         {
+            _bonusCount = 0;
             _text = Object.FindObjectOfType<Text>();
             _text.text = $"Вы набрали {_bonusCount}";
         }
 
-        public static void Display(int val)
+        public void Display(int val)
         {
             _bonusCount += val;
             _text.text = $"Вы набрали {_bonusCount}";
+            if (_bonusCount == _maxCount)
+            {
+                ServiceLocator.Get<GameOver>().GameEnd();
+            }
         }
 
-        public static void DisplayTrap()
+        public void DisplayTrap()
         {
             _text.text = $"Вы попали в ловушку!";
         }
 
-        public static void DisplayDie()
+        public void DisplayDie()
         {
             _text.text = $"Вы умерли!";
+            ServiceLocator.Get<GameOver>().GameEnd();
         }
-
 
         #endregion
     }

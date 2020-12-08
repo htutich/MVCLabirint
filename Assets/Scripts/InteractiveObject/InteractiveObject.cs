@@ -24,6 +24,7 @@ namespace MVCLabirint
             {
                 return;
             }
+            Interaction();
             WasInteract?.Invoke();
             Destroy(gameObject);
         }

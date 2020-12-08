@@ -19,7 +19,7 @@ namespace MVCLabirint
             if (_playerController._model.HealthPoints <= 0)
             {
                 Time.timeScale = 0.0f;
-                DisplayBonuses.DisplayDie();
+                ServiceLocator.Get<DisplayBonuses>().DisplayDie();
             }
         }
     }

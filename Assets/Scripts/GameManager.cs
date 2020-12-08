@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 
@@ -12,6 +13,7 @@ namespace MVCLabirint
         [SerializeField] private Vector3 _playerCamera;
         [SerializeField] private Transform _playerSpawnPoint;
         [SerializeField] private GameObject _playerPrefab;
+        [SerializeField] private GameObject _gameOverUI;
         private List<IUpdatable> _updatables = new List<IUpdatable>();
         private List<IFixedUpdatable> _fixedUpdatables = new List<IFixedUpdatable>();
         private InteractiveObject[] _interactiveObjects;
@@ -60,13 +62,18 @@ namespace MVCLabirint
                     _updatables.Add(interactiveObject);
                 }
             }
+
+            GameOver gameOver = new GameOver(_gameOverUI);
+            ServiceLocator.Set(gameOver);
+
+            new ButtonReloadView(_gameOverUI.GetComponentInChildren<Button>());
         }
 
         private void Update()
         {
             foreach (var updatable in _updatables)
             {
-                updatable.Tick();
+                updatable?.Tick();
             }
         }
 
@@ -74,11 +81,10 @@ namespace MVCLabirint
         {
             foreach (var fixedUpdateble in _fixedUpdatables)
             {
-                fixedUpdateble.FixedTick();
+                fixedUpdateble?.FixedTick();
             }
         }
 
         #endregion
-
     }
 }
